@@ -3,8 +3,8 @@ import Layout from "../components/layout/layout";
 
 import DashboardPage from "../pages/DashboardPage";
 import JobPage from "../pages/JobsPage";
-import AddJobPage from "../pages/AddJobPage";
-import EditJobPage from "../pages/EditJobPage";
+// import AddJobPage from "../pages/AddJobPage";
+// import EditJobPage from "../pages/EditJobPage";
 import SettingPage from "../pages/Settings";
 import { getAllJobs } from "../db";
 import type { Job } from "../types/job";
@@ -16,7 +16,7 @@ import { useCallback, useEffect, useState } from "react";
 const AppRoutes = () => {
 
     const [jobs, setJobs] = useState<Job[]>([]);
-    const [selectedJob, setSelectedJob] = useState<Job | null>(null);
+   // const [selectedJob, setSelectedJob] = useState<Job | null>(null);
 
     const refreshData = useCallback(
         async () => {
@@ -48,10 +48,10 @@ const AppRoutes = () => {
        <Routes>
           <Route element={<Layout />}>
               <Route path="/" element={ <Navigate to="/dashboard" replace /> } />
-              <Route path="/dashboard" element={ <DashboardPage /> } />
-              <Route path="/jobs" element={ <JobPage jobs={ jobs } onEdit = {(job) => setSelectedJob(job)} refresh= {refreshData} /> } />
-              <Route path="/jobs/add" element={ <AddJobPage selectedJob={selectedJob} refresh= {refreshData} clearSelection = {() => setSelectedJob(null)} /> } />
-              <Route path="/jobs/:id/edit" element={ <EditJobPage /> } />
+              <Route path="/dashboard" element={ <DashboardPage jobs={jobs} /> } />
+              <Route path="/jobs" element={ <JobPage jobs={ jobs }  refresh= {refreshData} /> } />
+              {/* <Route path="/jobs/add" element={ <AddJobPage selectedJob={selectedJob} refresh= {refreshData} clearSelection = {() => setSelectedJob(null)} /> } />
+              <Route path="/jobs/:id/edit" element={ <EditJobPage /> } /> */}
               <Route path="/settings" element={ <SettingPage /> } />
               
           </Route>

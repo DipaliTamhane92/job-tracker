@@ -1,6 +1,7 @@
 import React from "react";
 import "../../styles/model.css"
 
+
 interface ModelProp {
     isOpen: boolean;
     title: string;

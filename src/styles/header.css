@@ -1,0 +1,86 @@
+.main-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.5rem 2rem;
+  background: transparent;
+  margin-bottom: 1rem;
+}
+
+.header-left h1 {
+  font-size: 1.75rem;
+  font-weight: 800;
+  color: #1e293b; /* Dark slate */
+  margin: 0;
+  letter-spacing: -0.025em;
+}
+
+.header-left p {
+  color: #64748b; /* Muted slate */
+  margin: 4px 0 0 0;
+  font-size: 0.875rem;
+}
+
+.header-right {
+  display: flex;
+  gap: 1.5rem;
+  align-items: center;
+}
+
+.search-bar input {
+  padding: 0.6rem 1rem;
+  border-radius: 10px;
+  border: 1px solid #e2e8f0;
+  background: #ffffff;
+  width: 240px;
+  outline: none;
+  transition: all 0.2s;
+}
+
+.search-bar input:focus {
+  border-color: #6366f1;
+  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+}
+
+.avatar {
+  width: 40px;
+  height: 40px;
+  background: linear-gradient(135deg, #6366f1, #a855f7);
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  font-weight: 600;
+  font-size: 0.875rem;
+  cursor: pointer;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+}
+
+.dashboard-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end; /* Aligns title and "Add" button perfectly */
+  padding: 24px 0;
+  margin-bottom: 32px;
+  border-bottom: 1px solid #eef2f6;
+}
+
+.header-title h1 {
+  font-size: 28px;
+  font-weight: 800;
+  color: #1a1f36; /* Deep navy slate */
+  margin: 0;
+  letter-spacing: -0.5px;
+}
+
+.header-title p {
+  font-size: 14px;
+  color: #697386; /* Soft gray-blue */
+  margin: 4px 0 0 0;
+}
+
+.header-actions {
+  display: flex;
+  gap: 12px;
+}

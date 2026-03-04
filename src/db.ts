@@ -1,6 +1,8 @@
 import { openDB } from "idb";
 import type { DBSchema } from "idb"; //, IDBPDatabase
 import type { Job } from "./types/job";
+import initialJobs from "../src/data/initialJobs.json";
+import type { IDBPDatabase } from "idb";
 
 interface MyJobDb extends DBSchema {
     jobs: {
@@ -13,19 +15,51 @@ interface MyJobDb extends DBSchema {
 const DB_NAME = "JobAppDB";
 const DB_VERSION = 1;
 
+let dbPromise: Promise<IDBPDatabase<MyJobDb>> | null = null;
+
 export const initDB = async () => {
-    return openDB<MyJobDb>(DB_NAME, DB_VERSION, {
+
+    if (dbPromise) return dbPromise;
+
+    dbPromise = (async () => {
+  //  return openDB<MyJobDb>(DB_NAME, DB_VERSION, {
+   const db = await openDB<MyJobDb>(DB_NAME, DB_VERSION, {
         upgrade(db) {
             if(!db.objectStoreNames.contains("jobs")){
-                const store = db.createObjectStore("jobs", {
+                //const store =
+                 db.createObjectStore("jobs", {
                     keyPath: "id",
                     autoIncrement: true,
                 });
-                store.createIndex("by-Date", "date");
+              //  store.createIndex("by-Date", "date");
             }
         },
     });
+  
+    const tx = db.transaction('jobs', 'readonly');
+    const count = await tx.objectStore('jobs').count();
+    if (count === 0) {
+        console.log("Database empty. Seeding initial data...");
+        const writeTx = db.transaction('jobs', 'readwrite');
+        const store = writeTx.objectStore('jobs');
+
+        for (const job of initialJobs) {
+        // Cast the JSON data to Job type (Omit ID so DB generates it)
+           await store.add(job as Job);
+        }
+        
+        await writeTx.done;
+        console.log("Seeding complete!");
+    }
+
+    return db;
+})();
+
+return dbPromise;
+
 };
+
+
 
 export const addJob = async (job: Omit<Job, 'id'>) => {
     const db = await initDB();

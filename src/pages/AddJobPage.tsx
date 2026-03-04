@@ -7,27 +7,26 @@ import { addJob, updateJob } from "../db";
 interface Props {
   selectedJob?: Job | null;
   refresh: () => void;
-  clearSelection: () => void;
+ // clearSelection: () => void;
+  onClose: () => void;
 }
 
 const AddJobPage = ({
   selectedJob,
   refresh,
-  clearSelection,
+ // clearSelection,
+ onClose,
 }: Props) => {
-  // 1. Local State initialized from props
-  // Because of the 'key' prop in the parent, this resets automatically
+
   const [company, setCompany] = useState<string>(selectedJob?.company || "");
   const [role, setRole] = useState<string>(selectedJob?.role || "");
   const [status, setStatus] = useState<string>(selectedJob?.status || "applied");
   const [date, setDate] = useState<string>(selectedJob?.date || "");
   const [note, setNote] = useState<string>(selectedJob?.note || "");
 
-  /* ------------------ SUBMIT HANDLER ------------------ */
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    // Basic Validation
     if (!company || !role || !status || !date) {
       alert("Please fill in all required fields.");
       return;
@@ -54,7 +53,8 @@ const AddJobPage = ({
       refresh();
 
       // 3. Reset the parent's selection (this triggers the 'key' change)
-      clearSelection();
+     // clearSelection();
+     onClose();
       
     } catch (error) {
       console.error("Database operation failed:", error);
@@ -133,7 +133,7 @@ const AddJobPage = ({
           {selectedJob && (
             <button 
               type="button" 
-              onClick={clearSelection}
+              onClick={ onClose } // clearSelection
               style={{ padding: "10px 20px", cursor: "pointer" }}
             >
               Cancel
